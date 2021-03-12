@@ -13,21 +13,21 @@ else:
     repo = Repo.clone_from('https://github.com/tiangolo/fastapi.git', './tmp/xxx')
     # repo = Repo.clone_from('https://github.com/facebook/react/', './react')
 
-last_60_days_date = repo.head.commit.committed_datetime.date() - timedelta(31)
+last_31_days_date = repo.head.commit.committed_datetime.date() - timedelta(31)
 
 commits = []
 for commit in repo.iter_commits('master'):
     if str(commit.author) == 'github-actions' or str(commit.author) == 'github-actions[bot]':
         continue
-    if commit.committed_datetime.date() <= last_60_days_date:
+    if commit.committed_datetime.date() <= last_31_days_date:
         break
     commits.append(commit)
 
 ################################################################################
 dates = []
-while last_60_days_date <= repo.head.commit.committed_datetime.date():
-    dates.append(last_60_days_date)
-    last_60_days_date += timedelta(1)
+while last_31_days_date <= repo.head.commit.committed_datetime.date():
+    dates.append(last_31_days_date)
+    last_31_days_date += timedelta(1)
 ################################################################################
 
 ################################################################################
